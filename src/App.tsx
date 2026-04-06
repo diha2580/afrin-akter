@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   Mail, 
   Phone, 
@@ -13,8 +14,69 @@ import {
   Github,
   Linkedin,
   Instagram,
-  Download
+  Download,
+  X
 } from "lucide-react";
+
+interface Project {
+  title: string;
+  category: string;
+  image: string;
+  desc: string;
+  longDesc: string;
+  technologies: string[];
+}
+
+const projects: Project[] = [
+  {
+    title: "EcoStyle Brand Identity",
+    category: "Design",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800",
+    desc: "Complete visual identity system for a sustainable fashion brand, including logo, typography, and color palette.",
+    longDesc: "EcoStyle required a brand identity that reflected its commitment to sustainability without sacrificing high-end fashion aesthetics. The project involved extensive research into eco-friendly color palettes and the development of a minimalist logo that works across various physical and digital touchpoints. We created a comprehensive brand book that guides all future marketing efforts.",
+    technologies: ["Adobe Illustrator", "Figma", "Brand Strategy", "Typography"]
+  },
+  {
+    title: "TechNova Social Campaign",
+    category: "Marketing",
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
+    desc: "Strategic social media campaign that increased engagement by 45% across Instagram and LinkedIn.",
+    longDesc: "TechNova launched a new suite of AI tools and needed a social media presence that could explain complex concepts simply. I developed a 3-month content strategy focusing on educational carousels and high-energy reels. The campaign resulted in a significant uptick in organic reach and a 45% increase in community engagement metrics.",
+    technologies: ["Social Media Strategy", "Content Creation", "Analytics", "Meta Business Suite"]
+  },
+  {
+    title: "Nature's Whisper Series",
+    category: "Illustration",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
+    desc: "A series of custom digital illustrations inspired by organic forms and botanical elements.",
+    longDesc: "Nature's Whisper is a personal exploration of the intersection between digital art and organic textures. Each piece in the series was hand-drawn using digital tools, focusing on the intricate details of local flora. The series has been featured in several digital art galleries and used as background textures for high-end web projects.",
+    technologies: ["Procreate", "Adobe Photoshop", "Digital Painting", "Color Theory"]
+  },
+  {
+    title: "Global Retail Analysis",
+    category: "Marketing",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+    desc: "In-depth market research and consumer behavior analysis for a major retail expansion project.",
+    longDesc: "This project involved analyzing vast amounts of consumer data to identify emerging trends in the global retail sector. I provided actionable insights that helped the client pivot their expansion strategy toward high-growth regions. The final report included detailed personas, journey maps, and a 5-year growth forecast.",
+    technologies: ["Market Research", "Data Analysis", "Consumer Psychology", "Excel"]
+  },
+  {
+    title: "Artistic Direction - Bloom",
+    category: "Design",
+    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
+    desc: "Creative direction for a lifestyle magazine, focusing on minimalist aesthetics and bold typography.",
+    longDesc: "As the artistic director for Bloom Magazine's 'Spring Renewal' issue, I oversaw the visual narrative from cover to cover. This included coordinating with photographers, selecting typography that balanced elegance with readability, and designing complex multi-page layouts that maintained a consistent flow throughout the publication.",
+    technologies: ["Adobe InDesign", "Art Direction", "Layout Design", "Print Production"]
+  },
+  {
+    title: "Corporate Illustration Set",
+    category: "Illustration",
+    image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800",
+    desc: "A cohesive set of digital illustrations for a SaaS platform's onboarding experience.",
+    longDesc: "SaaS platforms often struggle with making onboarding feel human. I created a set of 20+ custom illustrations that guide users through the setup process with a friendly and approachable style. These illustrations were designed to be modular, allowing the development team to easily integrate them into various parts of the UI.",
+    technologies: ["Vector Illustration", "Adobe Illustrator", "UI/UX Design", "Character Design"]
+  }
+];
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -31,6 +93,7 @@ const stagger = {
 };
 
 export default function App() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   return (
     <div className="min-h-screen selection:bg-brand-blue selection:text-white">
       {/* Navigation */}
@@ -306,44 +369,7 @@ export default function App() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "EcoStyle Brand Identity",
-                category: "Design",
-                image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800",
-                desc: "Complete visual identity system for a sustainable fashion brand, including logo, typography, and color palette."
-              },
-              {
-                title: "TechNova Social Campaign",
-                category: "Marketing",
-                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-                desc: "Strategic social media campaign that increased engagement by 45% across Instagram and LinkedIn."
-              },
-              {
-                title: "Nature's Whisper Series",
-                category: "Illustration",
-                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
-                desc: "A series of custom digital illustrations inspired by organic forms and botanical elements."
-              },
-              {
-                title: "Global Retail Analysis",
-                category: "Marketing",
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-                desc: "In-depth market research and consumer behavior analysis for a major retail expansion project."
-              },
-              {
-                title: "Artistic Direction - Bloom",
-                category: "Design",
-                image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
-                desc: "Creative direction for a lifestyle magazine, focusing on minimalist aesthetics and bold typography."
-              },
-              {
-                title: "Corporate Illustration Set",
-                category: "Illustration",
-                image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800",
-                desc: "A cohesive set of digital illustrations for a SaaS platform's onboarding experience."
-              }
-            ].map((project, i) => (
+            {projects.map((project, i) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -351,6 +377,7 @@ export default function App() {
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
                 className="group cursor-pointer"
+                onClick={() => setSelectedProject(project)}
               >
                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden mb-6">
                   <img 
@@ -369,10 +396,87 @@ export default function App() {
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold mb-2 group-hover:text-brand-blue transition-colors">{project.title}</h3>
-                <p className="text-gray-500 text-sm line-clamp-2">{project.desc}</p>
+                <p className="text-gray-500 text-sm line-clamp-2 mb-4">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.slice(0, 3).map((tech, j) => (
+                    <span key={j} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-gray-100 text-gray-400 rounded-md">
+                      {tech}
+                    </span>
+                  ))}
+                  {project.technologies.length > 3 && (
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-gray-100 text-gray-400 rounded-md">
+                      +{project.technologies.length - 3}
+                    </span>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>
+
+          <AnimatePresence>
+            {selectedProject && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-brand-blue/20 backdrop-blur-xl"
+                onClick={() => setSelectedProject(null)}
+              >
+                <motion.div 
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                  className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="relative aspect-video w-full">
+                    <img 
+                      src={selectedProject.image} 
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                    <button 
+                      onClick={() => setSelectedProject(null)}
+                      className="absolute top-6 right-6 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition-all shadow-lg"
+                    >
+                      <X size={24} />
+                    </button>
+                  </div>
+                  <div className="p-10 lg:p-16">
+                    <div className="flex flex-wrap items-center gap-4 mb-6">
+                      <span className="px-4 py-1 bg-brand-blue/10 text-brand-blue rounded-full text-xs font-bold uppercase tracking-wider">
+                        {selectedProject.category}
+                      </span>
+                      <h2 className="text-4xl lg:text-5xl font-display font-bold text-brand-blue">{selectedProject.title}</h2>
+                    </div>
+                    
+                    <div className="grid lg:grid-cols-3 gap-12">
+                      <div className="lg:col-span-2">
+                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Project Overview</h4>
+                        <p className="text-xl text-gray-700 leading-relaxed">
+                          {selectedProject.longDesc}
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Technologies Used</h4>
+                        <div className="flex flex-wrap gap-3">
+                          {selectedProject.technologies.map((tech, i) => (
+                            <span key={i} className="px-4 py-2 bg-brand-cream text-brand-blue rounded-xl text-sm font-bold">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        <button className="w-full mt-12 py-4 bg-brand-blue text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-700 transition-all">
+                          Live Case Study <ExternalLink size={18} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className="mt-20 text-center">
             <button className="px-10 py-4 border-2 border-brand-blue text-brand-blue rounded-xl font-bold hover:bg-brand-blue hover:text-white transition-all">
